@@ -30,25 +30,32 @@ public class LivroController {
 
 	@PostMapping("/v1/livro")
 	public ResponseEntity<Object> create(@RequestBody Livro livro, BindingResult result) {
-		logger.info(">>>>>> 1. controller chamou servico save");
+		logger.info(">>>>>> 1. controller chamou servico save sem erro no bean validation");
 		return servico.save(livro, result);
 	}
 
 	@GetMapping("/v1/livros")
 	public ResponseEntity<List<Livro>> consultaTodos() {
-		return servico.consultaTodos();
-
+		return ResponseEntity.ok().body(servico.consultaTodos());
 	}
 
 	@GetMapping("v1/livro/{id}")
 	public ResponseEntity<Livro> findById(@PathVariable long id) {
 		logger.info(">>>>>> 1. controller chamou servico consulta por id => " + id);
-		return servico.consultaPorId(id);
+		return servico.consultaPorId(id).map(record -> ResponseEntity.ok().body(record))
+				.orElse(ResponseEntity.notFound().build());
 	}
 
 	@GetMapping("v1/livros/{isbn}")
 	public ResponseEntity<Livro> findByIsbn(@PathVariable String isbn) {
 		logger.info(">>>>>> 1. controller chamou servico consulta por isbn => " + isbn);
-		return servico.consultaPorIsbn(isbn);
+		ResponseEntity<Livro> response=null;
+		Livro livro = servico.consultaPorIsbn(isbn);
+		if (livro != null)
+			response = ResponseEntity.ok().body(livro);
+		else
+			response = ResponseEntity.notFound().build();
+		return response;
+		
 	}
 }

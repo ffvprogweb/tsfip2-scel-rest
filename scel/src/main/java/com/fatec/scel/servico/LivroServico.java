@@ -7,9 +7,9 @@ import org.springframework.validation.BindingResult;
 import com.fatec.scel.model.Livro;
 public interface LivroServico {
 	
-	ResponseEntity<List<Livro>> consultaTodos();
-	ResponseEntity<Livro> consultaPorIsbn(String isbn);
-	ResponseEntity<Livro> consultaPorId(Long id);
+	List<Livro> consultaTodos();
+	Livro consultaPorIsbn(String isbn);
+	Optional<Livro> consultaPorId(Long id);
 	ResponseEntity<Object> save(Livro Livro, BindingResult result);
 	void delete (Long id);
 

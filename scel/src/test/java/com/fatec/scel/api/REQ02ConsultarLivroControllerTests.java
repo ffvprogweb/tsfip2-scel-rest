@@ -74,7 +74,16 @@ class REQ02ConsultarLivroControllerTests {
 		assertEquals("200 OK", resposta.getStatusCode().toString());
 	}
 	@Test
-	public void ct03_quando_consulta_pelo_isbn_entao_retorna_os_detalhes_do_livro() throws Exception {
+	public void ct03_quando_consulta_id_nao_cadastrado_retorna_404() throws Exception {
+		// Dado - que o id nao esta cadastrado
+		Long id = 11L;
+		// Quando - o usuario consulta pelo id
+		ResponseEntity<Livro> resposta = testRestTemplate.getForEntity("/api/v1/livro/" + id, Livro.class);
+		// Entao - retorna 404
+		assertEquals("404 NOT_FOUND", resposta.getStatusCode().toString());
+	}
+	@Test
+	public void ct04_quando_consulta_pelo_isbn_entao_retorna_os_detalhes_do_livro() throws Exception {
 		// Dado - que existem dois registros no banco de dados
 		// Quando - o usuario consulta pelo isbn
 		String isbn = "1111";
@@ -89,7 +98,7 @@ class REQ02ConsultarLivroControllerTests {
 	}
 
 	@Test
-	public void ct04_quando_consulta_isbn_nao_cadastrado_retorna_not_found() throws Exception {
+	public void ct05_quando_consulta_isbn_nao_cadastrado_retorna_not_found() throws Exception {
 		// Dado - que existem dois registros no banco de dados
 		// Quando - o usuario consulta isbn nao cadastrado
 		String isbn = "3333";

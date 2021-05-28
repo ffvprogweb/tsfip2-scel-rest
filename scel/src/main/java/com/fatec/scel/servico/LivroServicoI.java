@@ -1,6 +1,7 @@
 package com.fatec.scel.servico;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -23,9 +24,9 @@ public class LivroServicoI implements LivroServico {
 	LivroRepository repository;
 
 	@Override
-	public ResponseEntity<List<Livro>> consultaTodos() {
-		List<Livro> livros = repository.findAll();
-		return ResponseEntity.ok().body(livros);
+	public List<Livro> consultaTodos() {
+		return repository.findAll();
+		
 	}
 
 	@Override
@@ -33,39 +34,33 @@ public class LivroServicoI implements LivroServico {
 
 		try {
 			if (result.hasErrors()) {
-				logger.info(">>>>>> 1. controller chamou servico save - erro detectado no bean");
+				logger.info(">>>>>> 2. controller chamou servico save - erro detectado no bean");
 				return new ResponseEntity<>(result.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			} else {
-				logger.info(">>>>>> 1. controller chamou servico save sem erro no bean validation");
+				logger.info(">>>>>> 2. controller chamou servico save sem erro no bean validation");
 				repository.save(livro);
 				return new ResponseEntity<>("Cliente cadastrado", HttpStatus.CREATED);
 			}
 		} catch (DataIntegrityViolationException e) {
-			logger.info(">>>>>> 1. controller chamou servico erro cliente ja cadastrado");
+			logger.info(">>>>>> 2. controller chamou servico erro cliente ja cadastrado");
 			return new ResponseEntity<>("Cliente já cadastrado", HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Erro não esperado - cotacte o administrador", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Erro não esperado", HttpStatus.BAD_REQUEST);
 		}
 
 	}
 
 	@Override
-	public ResponseEntity<Livro> consultaPorId(Long id) {
+	public Optional<Livro> consultaPorId(Long id) {
 		logger.info(">>>>>> 2. servico consulta por id chamado");
-		return repository.findById(id).map(record -> ResponseEntity.ok().body(record))
-				.orElse(ResponseEntity.notFound().build());
+		return repository.findById(id);
 	}
 
 	@Override
-	public ResponseEntity<Livro> consultaPorIsbn(String isbn) {
-		ResponseEntity<Livro> response;
+	public Livro consultaPorIsbn(String isbn) {
 		logger.info(">>>>>> 2. servico consulta por id chamado");
-		Livro livro = repository.findByIsbn(isbn);
-		if (livro != null)
-			response = ResponseEntity.ok().body(livro);
-		else
-			response = ResponseEntity.notFound().build();
-		return response;
+		return repository.findByIsbn(isbn);
+		
 	}
 
 	@Override
