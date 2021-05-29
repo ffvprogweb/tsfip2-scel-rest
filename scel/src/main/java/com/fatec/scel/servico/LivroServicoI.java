@@ -30,22 +30,21 @@ public class LivroServicoI implements LivroServico {
 	}
 
 	@Override
-	public ResponseEntity<Object> save(@Valid Livro livro, BindingResult result) {
-
+	public CodigoDeRetorno save(@Valid Livro livro, BindingResult result) {
 		try {
 			if (result.hasErrors()) {
 				logger.info(">>>>>> 2. controller chamou servico save - erro detectado no bean");
-				return new ResponseEntity<>(result.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+				return new CodigoDeRetorno(result.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
 			} else {
 				logger.info(">>>>>> 2. controller chamou servico save sem erro no bean validation");
 				repository.save(livro);
-				return new ResponseEntity<>("Cliente cadastrado", HttpStatus.CREATED);
+				return new CodigoDeRetorno("Cliente cadastrado", HttpStatus.CREATED);
 			}
 		} catch (DataIntegrityViolationException e) {
 			logger.info(">>>>>> 2. controller chamou servico erro cliente ja cadastrado");
-			return new ResponseEntity<>("Cliente já cadastrado", HttpStatus.BAD_REQUEST);
+			return new CodigoDeRetorno("Cliente já cadastrado", HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Erro não esperado", HttpStatus.BAD_REQUEST);
+			return new CodigoDeRetorno("Erro não esperado", HttpStatus.BAD_REQUEST);
 		}
 
 	}

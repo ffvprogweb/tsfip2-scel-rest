@@ -10,7 +10,7 @@ public interface LivroServico {
 	List<Livro> consultaTodos();
 	Livro consultaPorIsbn(String isbn);
 	Optional<Livro> consultaPorId(Long id);
-	ResponseEntity<Object> save(Livro Livro, BindingResult result);
+	CodigoDeRetorno save(Livro Livro, BindingResult result);
 	void delete (Long id);
 
 

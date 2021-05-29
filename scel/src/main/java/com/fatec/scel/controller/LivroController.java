@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fatec.scel.model.Livro;
+import com.fatec.scel.servico.CodigoDeRetorno;
 import com.fatec.scel.servico.LivroServico;
 
 @RestController
@@ -31,7 +32,8 @@ public class LivroController {
 	@PostMapping("/v1/livro")
 	public ResponseEntity<Object> create(@RequestBody Livro livro, BindingResult result) {
 		logger.info(">>>>>> 1. controller chamou servico save sem erro no bean validation");
-		return servico.save(livro, result);
+		CodigoDeRetorno codigo = servico.save(livro, result);
+		return new ResponseEntity<>(codigo.getMensagem(),codigo.getHttp());
 	}
 
 	@GetMapping("/v1/livros")

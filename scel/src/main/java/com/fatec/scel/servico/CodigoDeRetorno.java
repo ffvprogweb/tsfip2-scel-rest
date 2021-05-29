@@ -2,14 +2,17 @@ package com.fatec.scel.servico;
 
 import org.springframework.http.HttpStatus;
 
-public class MensagemDeRetorno {
+public class CodigoDeRetorno {
 	
 	String mensagem;
 	HttpStatus http;
 	
-	public MensagemDeRetorno(String m, HttpStatus http) {
+	public CodigoDeRetorno(String m, HttpStatus http) {
 		this.mensagem = "texot";
 		this.http = http;
+	}
+	public CodigoDeRetorno() {
+		
 	}
 
 	public String getMensagem() {
