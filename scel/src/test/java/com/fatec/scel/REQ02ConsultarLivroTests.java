@@ -49,7 +49,7 @@ class REQ02ConsultarLivroTests {
 		Optional<Livro> ro = repository.findById(11L);
 		//Então - o resultado obtido da consulta deve ser igual ao objeto cadastrado
 		//livro.setTitulo("novo tiulo");
-		assertTrue(ro.isEmpty());
+		assertTrue(ro.empty() != null);
 		
 	}
 	@Test
