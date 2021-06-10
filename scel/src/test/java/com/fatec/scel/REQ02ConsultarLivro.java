@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fatec.scel.model.Livro;
 import com.fatec.scel.model.LivroRepository;
 @SpringBootTest
-class REQ02ConsultarLivroTests {
+class REQ02ConsultarLivro {
 	
 	@Autowired
 	LivroRepository repository;

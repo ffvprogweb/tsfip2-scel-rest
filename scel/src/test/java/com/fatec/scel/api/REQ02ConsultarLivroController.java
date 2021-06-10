@@ -23,7 +23,7 @@ import com.fatec.scel.model.LivroRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(Lifecycle.PER_CLASS)
-class REQ02ConsultarLivroControllerTests {
+class REQ02ConsultarLivroController {
 	@Autowired
 	TestRestTemplate testRestTemplate;
 	@Autowired

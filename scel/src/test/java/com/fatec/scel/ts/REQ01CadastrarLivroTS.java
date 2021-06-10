@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import com.fatec.scel.po.PaginaCadastrarLivro;
 import com.fatec.scel.po.PaginaLogin;
 
-class REQ01CadastrarLivroTSTests {
+class REQ01CadastrarLivroTS {
 	private WebDriver driver;
 
 	@BeforeEach
