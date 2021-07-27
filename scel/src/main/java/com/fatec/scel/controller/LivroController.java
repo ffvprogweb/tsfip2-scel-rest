@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +30,13 @@ public class LivroController {
 
 	Logger logger = LogManager.getLogger(LivroController.class);
 
-	@PostMapping("/v1/livro")
+	@PostMapping("/v1/livros")
 	public ResponseEntity<Object> create(@RequestBody Livro livro, BindingResult result) {
 		logger.info(">>>>>> 1. controller chamou servico save sem erro no bean validation");
 		CodigoDeRetorno codigo = servico.save(livro, result);
-		return new ResponseEntity<>(codigo.getMensagem(),codigo.getHttp());
+		return new ResponseEntity<>(codigo.getHttp());
 	}
-
+	@CrossOrigin
 	@GetMapping("/v1/livros")
 	public ResponseEntity<List<Livro>> consultaTodos() {
 		return ResponseEntity.ok().body(servico.consultaTodos());
